@@ -1,44 +1,19 @@
 import { app, http } from './src/server'
 import * as WebSocket from 'ws'
-
-import Handlers from './src/sys/handlers'
-import Channel_Messages from './src/sys/handler/Channel_Mesages'
-import Ping from './src/sys/handler/Ping'
+import Connection_Handler from './src/sys/handlers'
 
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server: server })
 const PORT = 9000
 
-const handlers = new Handlers({
-    [Channel_Messages.EVENT]: new Channel_Messages(wss),
-    [Ping.EVENT]: new Ping()
+const connection_handler = new Connection_Handler({
+    WebSocket: WebSocket,
+    wss: wss
 })
 
-wss.on('connection', (ws) => {
-    console.log('a new red pill connected')
-
-    ws.on('message', (msg) => {
-        console.log('[Red Pill]: %s', msg)
-        // console.log('[socket][id]: ', ws.id)
-
-        try {
-            const payload = JSON.parse(msg)
-            console.log('Red Pill > Payload: ', payload)
-
-            handlers.handle({
-                ...payload,
-                open_state: WebSocket.OPEN,
-                ws: ws
-            })
-
-            
-        } catch (e) {
-            console.log(e)
-        }
-
-    })
+wss.on('connection', (ws, req) => {
+    connection_handler.handle(ws, req)
 })
-
 
 app.get('/', (req, res) => {
     res.send('[Nebuchadnezzar] is online...')
