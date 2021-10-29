@@ -1,44 +1,41 @@
 import { app, http } from './src/server'
 import * as WebSocket from 'ws'
 
+import Handlers from './src/sys/handlers'
+import Channel_Messages from './src/sys/handler/Channel_Mesages'
+import Ping from './src/sys/handler/Ping'
+
 const server = http.createServer(app)
 const wss = new WebSocket.Server({ server: server })
 const PORT = 9000
+
+const handlers = new Handlers({
+    [Channel_Messages.EVENT]: new Channel_Messages(wss),
+    [Ping.EVENT]: new Ping()
+})
 
 wss.on('connection', (ws) => {
     console.log('a new red pill connected')
 
     ws.on('message', (msg) => {
         console.log('[Red Pill]: %s', msg)
+        // console.log('[socket][id]: ', ws.id)
 
-        if (msg == 'ping') {
-            const payload = {
-                event: 'pong',
-                data: null
-            }
+        try {
+            const payload = JSON.parse(msg)
+            console.log('Red Pill > Payload: ', payload)
 
-            return ws.send(JSON.stringify(payload))
-        } else {
-            try {
-                const client_payload = JSON.parse(msg)
-                console.log('Red Pill > Payload: ', client_payload)
-    
-                if (client_payload.event == 'channel_msg_sent') {
-                    const payload = {
-                        event: 'update_channel_msgs',
-                        data: {}
-                    }
+            handlers.handle({
+                ...payload,
+                open_state: WebSocket.OPEN,
+                ws: ws
+            })
 
-                    wss.clients.forEach((client) => {
-                        if (client.readyState === WebSocket.OPEN) {
-                          client.send(JSON.stringify(payload));
-                        }
-                    })
-                }
-            } catch (e) {
-                console.log(e)
-            }
+            
+        } catch (e) {
+            console.log(e)
         }
+
     })
 })
 
