@@ -4,15 +4,32 @@ class Channel_Messages {
         this.handle = this.handle.bind(this)
     }
 
+
+
     handle(msg) {
-        const payload = {
+        const response = {
             event: 'update_channel_msgs',
-            data: {}
+            payload: {}
         }
+
+        console.log('MSG > ', msg)
 
         this.wss.clients.forEach((client) => {
             if (client.readyState === msg.open_state) {
-                client.send(JSON.stringify(payload))
+                client.cache.forEach(s => {
+
+                    //this needs to be cleaned up a bit                    
+
+                    if 
+                    (
+                        s.server_id == msg.payload.server_id &&
+                        s.channel_id == msg.payload.channel_id
+                    ) 
+                    {
+                        console.log('[NEBUCHADNEZZAR]: server match: ', msg)
+                        client.send(JSON.stringify(response))
+                    }
+                })
             }
         })
     }
