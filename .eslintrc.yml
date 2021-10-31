@@ -1,0 +1,39 @@
+env:
+  browser: false
+  node: true
+  es6: true
+extends: 'eslint:recommended'
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: 2018
+  sourceType: module
+plugins:
+  - node
+rules:
+  indent:
+    - warn
+    - tab
+  linebreak-style:
+    - warn
+    - unix
+  quotes:
+    - warn
+    - double
+  semi:
+    - warn
+    - never
+  space-before-function-paren: 
+    - warn
+    - never
+  space-in-parens:
+    - warn
+  arrow-parens:
+    - warn
+    - as-needed
+  eol-last:
+    - warn
+    - never

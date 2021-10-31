@@ -1,31 +1,37 @@
 {
-  "name": "chat-ws-server",
-  "version": "1.0.0",
-  "description": "A more straight forward approach",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node node_modules/.bin/babel-node index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TheMachineHerald/Chat-WS-Server.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/TheMachineHerald/Chat-WS-Server/issues"
-  },
-  "homepage": "https://github.com/TheMachineHerald/Chat-WS-Server#readme",
-  "devDependencies": {
-    "@babel/core": "^7.15.8",
-    "@babel/node": "^7.15.8",
-    "@babel/preset-env": "^7.15.8"
-  },
-  "dependencies": {
-    "axios": "^0.24.0",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "ws": "^8.2.3"
-  }
+	"name": "chat-ws-server",
+	"version": "1.0.0",
+	"description": "A more straight forward approach",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint node_modules/.bin/eslint './**' --fix",
+		"start": "node node_modules/.bin/babel-node index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/TheMachineHerald/Chat-WS-Server.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/TheMachineHerald/Chat-WS-Server/issues"
+	},
+	"homepage": "https://github.com/TheMachineHerald/Chat-WS-Server#readme",
+	"devDependencies": {
+		"@babel/core": "^7.15.8",
+		"@babel/node": "^7.15.8",
+		"@babel/preset-env": "^7.15.8",
+		"eslint": "^7.32.0",
+		"eslint-config-standard": "^16.0.3",
+		"eslint-plugin-import": "^2.25.2",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^5.1.1"
+	},
+	"dependencies": {
+		"axios": "^0.24.0",
+		"dotenv": "^10.0.0",
+		"express": "^4.17.1",
+		"ws": "^8.2.3"
+	}
 }
