@@ -1,5 +1,5 @@
-require('dotenv').config()
+require("dotenv").config()
 
 export const config = {
-    API_ENDPOINT: process.env.API_ENDPOINT
+	API_ENDPOINT: process.env.API_ENDPOINT
 }
