@@ -15,4 +15,5 @@ class Socket_Close {
 	}
 }
 
+Socket_Close.EVENT = "CLIENT_SOCKET_CLOSE"
 export default Socket_Close

@@ -5,13 +5,12 @@ class Ping {
 
 	handle(msg) {
 		const payload = {
-			event: "pong",
+			event: "PONG",
 			data: null
 		}
-
 		return msg.ws.send(JSON.stringify(payload))
 	}
 }
 
-Ping.EVENT = "ping"
+Ping.EVENT = "PING"
 export default Ping

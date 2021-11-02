@@ -1,4 +1,5 @@
 import Message_Handler from "../handlers/Message_Handler"
+import Socket_Open from "./Socket_Open"
 import Socket_Close from "./Socket_Close"
 import Channel_Messages from "./Channel_Mesages"
 import Ping from "./Ping"
@@ -12,15 +13,21 @@ class Clients {
 		this.wss = ctx.wss
 		this.create_client = this.create_client.bind(this)
 		this.init_handlers = this.init_handlers.bind(this)
-		this.hydrate = this.hydrate.bind(this)
-		this.hydrate_client = this.hydrate_client.bind(this)
 		this.message_handler = new Message_Handler({
+			[Socket_Open.EVENT]: new Socket_Open(ctx.wss),
+			[Socket_Close.EVENT]: new Socket_Close(ctx.wss),
 			[Channel_Messages.EVENT]: new Channel_Messages(ctx.wss),
 			[Ping.EVENT]: new Ping()
 		})
 		this.close_handler = new Socket_Close(ctx)
 	}
 
+	/**
+	 * @param client Websocket client instance
+	 * @NOTE All event listeners on the client socket instance are created here 
+	 *       based on the type of socket event recieved. Each event has its own
+	 *       handler.
+	 */
 	init_handlers(client) {
 		console.log(`red pill [${client.id}] has joined the Nebuchadnezzar!`)
 
@@ -42,30 +49,12 @@ class Clients {
 		})
 	}
 
-	hydrate(client, payload) {
-		payload.forEach(server => {
-			this.clients[client].cache.push(server)
-		})
-	}
-
-	/**
-     * @name hydrate_client Retrieves active channels + servers
-     * @param {*} client Full client ws instance
-     * @NOTE NEEDS TO HAVE FALLBACK > REMOVE API CALL
-     */
-	hydrate_client(client) {
-		const parsed_id = client.id.split("-")[1] || null
-		fetch(`${this.API_ENDPOINT}/api/hydrate/user/${parsed_id}`)
-			.then(response => {
-				const payload = response.data.payload
-				this.hydrate(client.id, payload)
-			})
-			.catch(err => console.log(err))
-	}
 	/**
      * @param ws ws Client WebSocket Instance
 	 * @param req wss request object 
-     * @NOTE NEEDS TO HAVE FALLBACK
+     * @NOTE create_client defines the initial properties of the client
+	 *       socket, which we will use to hydrate with our Socket_Open
+	 *       handler when we recieve the "client_socket_open" event.
      */
 	create_client(ws, req) {
 		const id = req.url.replace("/?client=", "")
@@ -75,7 +64,6 @@ class Clients {
 		this.clients[id].id = id
 		this.clients[id].cache = []
 		this.init_handlers(this.clients[id])
-		this.hydrate_client(this.clients[id])
 	}
 }
 

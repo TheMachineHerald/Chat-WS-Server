@@ -7,7 +7,7 @@ class Channel_Messages {
 
 	broadcast(msg) {
 		const message = {
-			event: "update_channel_msgs",
+			event: "UPDATE_CHANNEL_MESSAGES",
 			payload: {}
 		}
 		this.wss.clients.forEach(client => {
@@ -16,8 +16,8 @@ class Channel_Messages {
 					if
 					(
 						//Should also check server_selected_id = 1
-						s.server_id === msg.payload.server_id &&
-                        s.channel_id === msg.payload.channel_id
+						s.selected_server_id === msg.payload.server_id &&
+						s.selected_channel_id === msg.payload.channel_id
 					) {
 						console.log("[NEBUCHADNEZZAR]: server match: ", msg.payload)
 						client.send(JSON.stringify(message))
@@ -32,5 +32,5 @@ class Channel_Messages {
 	}
 }
 
-Channel_Messages.EVENT = "channel_msg_sent"
+Channel_Messages.EVENT = "CHANNEL_MESSAGE_SENT"
 export default Channel_Messages

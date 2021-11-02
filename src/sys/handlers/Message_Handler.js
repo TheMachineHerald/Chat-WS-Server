@@ -6,7 +6,7 @@ class Message_Handler {
 
 	handle(msg) {
 		if (!this.handlers[msg.event]) {
-			throw new Error("No handler for message")
+			console.log(`No handler for [EVENT][${msg.event}]`)
 		}
 
 		this.handlers[msg.event].handle(msg)
