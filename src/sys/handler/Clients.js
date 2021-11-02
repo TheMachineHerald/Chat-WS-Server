@@ -15,11 +15,10 @@ class Clients {
 		this.init_handlers = this.init_handlers.bind(this)
 		this.message_handler = new Message_Handler({
 			[Socket_Open.EVENT]: new Socket_Open(ctx.wss),
-			[Socket_Close.EVENT]: new Socket_Close(ctx.wss),
 			[Channel_Messages.EVENT]: new Channel_Messages(ctx.wss),
 			[Ping.EVENT]: new Ping()
 		})
-		this.close_handler = new Socket_Close(ctx)
+		this.close_handler = new Socket_Close(ctx.wss)
 	}
 
 	/**
@@ -41,7 +40,9 @@ class Clients {
 		})
 
 		client.on("close", (code, reason) => {
+			console.log("[NEBUCHADNEZZAR][EVENT][CLOSE]")
 			this.close_handler.handle({
+				open_state: this.WebSocket.OPEN,
 				code: code,
 				reason: reason,
 				client: client
