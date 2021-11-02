@@ -1,10 +1,12 @@
 import Message_Handler from "../handlers/Message_Handler"
 import Socket_Open from "./Socket_Open"
 import Socket_Close from "./Socket_Close"
+import Selected_Channel from "./Selected_Channel"
 import Channel_Messages from "./Channel_Mesages"
 import Ping from "./Ping"
 import { config } from "../../config"
 
+//This will be renamed and refactored for better semantics
 class Clients {
 	constructor(ctx) {
 		this.clients = {}
@@ -15,6 +17,7 @@ class Clients {
 		this.init_handlers = this.init_handlers.bind(this)
 		this.message_handler = new Message_Handler({
 			[Socket_Open.EVENT]: new Socket_Open(ctx.wss),
+			[Selected_Channel.EVENT]: new Selected_Channel(ctx.wss),
 			[Channel_Messages.EVENT]: new Channel_Messages(ctx.wss),
 			[Ping.EVENT]: new Ping()
 		})
@@ -28,7 +31,7 @@ class Clients {
 	 *       handler.
 	 */
 	init_handlers(client) {
-		console.log(`red pill [${client.id}] has joined the Nebuchadnezzar!`)
+		console.log(`[RED-PILL][${client.id}] has joined the Nebuchadnezzar!`)
 
 		client.on("message", msg => {
 			const payload = JSON.parse(msg)
