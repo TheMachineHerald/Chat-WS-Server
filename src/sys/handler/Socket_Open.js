@@ -9,7 +9,7 @@ class Socket_Open {
 	hydrate_client(msg) {
 		const parsed_id = msg.ws.id.split("-")[1] || null
 		msg.ws.cache.push(msg.payload)
-		console.log("[CLIENT HYDRATED: ", parsed_id, msg.payload)
+		console.log("[RED-PILL][HYDRATED]: ", parsed_id, msg.payload)
 		this.broadcast(msg)
 	}
 
@@ -33,7 +33,6 @@ class Socket_Open {
 						s.selected_server_id === msg.payload.selected_server_id &&
                         s.id !== msg.payload.id
 					) {
-						console.log("[NEBUCHADNEZZAR] Client Hydrated: ", msg.payload)
 						client.send(JSON.stringify(message))
 					}
 				})
