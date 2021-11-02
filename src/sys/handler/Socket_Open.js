@@ -25,13 +25,12 @@ class Socket_Open {
 		this.wss.clients.forEach(client => {
 			if (client.readyState === msg.open_state) {
 				client.cache.forEach(s => {
-					if
-					(
+					if (
 					/**
                      * Should only broadcast to clients that share the same
                      * server or are mutual friends.
                      */
-						s.server_id === msg.payload.server_id &&
+						s.selected_server_id === msg.payload.selected_server_id &&
                         s.id !== msg.payload.id
 					) {
 						console.log("[NEBUCHADNEZZAR] Client Hydrated: ", msg.payload)
