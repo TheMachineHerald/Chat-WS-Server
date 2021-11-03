@@ -8,6 +8,8 @@ class Socket_Open {
 
 	hydrate_client(msg) {
 		const parsed_id = msg.ws.id.split("-")[1] || null
+		msg.ws.selected_server_id = msg.payload.selected_server_id
+		msg.ws.selected_channel_id = msg.payload.selected_channel_id
 		msg.ws.cache.push(msg.payload)
 		console.log("[RED-PILL][HYDRATED]: ", parsed_id, msg.payload)
 		this.broadcast(msg)
