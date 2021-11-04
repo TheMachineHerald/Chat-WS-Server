@@ -1,11 +1,11 @@
 class Message_Handler {
-	constructor(handlers) {
+	handlers: any
+	constructor(handlers: any) {
 		this.handlers = handlers
 		this.handle = this.handle.bind(this)
 	}
 
-	handle(msg) {
-		console.log("MSG: ", msg.event)
+	handle(msg: any) {
 		if (!this.handlers[msg.event]) {
 			console.log(`No handler for [EVENT][${msg.event}]`)
 		}
