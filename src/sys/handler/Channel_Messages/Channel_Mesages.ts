@@ -1,16 +1,22 @@
+import { WebSocket, WebSocketServer } from "ws-ws"
+import HANDLER_MESSAGE from "./types"
+
 class Channel_Messages {
-	constructor(wss) {
+	wss: WebSocketServer
+
+	constructor(wss: WebSocketServer) {
 		this.wss = wss
 		this.broadcast = this.broadcast.bind(this)
 		this.handle = this.handle.bind(this)
 	}
 
-	broadcast(msg) {
-		const message = {
+	broadcast(msg: HANDLER_MESSAGE): void {
+		const message: Object = {
 			event: "UPDATE_CHANNEL_MESSAGES",
 			payload: {}
 		}
-		this.wss.clients.forEach(client => {
+
+		this.wss.clients.forEach((client: WebSocket): void => {
 			if (client.readyState === msg.open_state) {
 				if (
 					client.selected_server_id === msg.payload.server_id &&
@@ -23,10 +29,9 @@ class Channel_Messages {
 		})
 	}
 
-	handle(msg) {
+	handle(msg: HANDLER_MESSAGE): void {
 		this.broadcast(msg)
 	}
 }
 
-Channel_Messages.EVENT = "CHANNEL_MESSAGE_SENT"
 export default Channel_Messages
