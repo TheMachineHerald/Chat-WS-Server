@@ -57,12 +57,13 @@ class Connection {
 	}
 
 	/**
-     * @param ws ws Client WebSocket Instance
-	 * @param req wss request object 
-     * @NOTE create_client defines the initial properties of the client
-	 *       socket, which we will use to hydrate with our Socket_Open
-	 *       handler when we recieve the "client_socket_open" event.
-     */
+	 * @param ws ws Client WebSocket Instance
+	 * @param req wss request object
+	 * 
+	 * @NOTE create_client defines the initial properties of the client
+	 * socket, which we will use to hydrate with our Socket_Open
+	 * handler when we recieve the "client_socket_open" event.
+	 */
 	create_client(ws: CLIENT_SOCKET, req: any): void {
 		const id = req.url.replace("/?client=", "")
 		ws.id = id
