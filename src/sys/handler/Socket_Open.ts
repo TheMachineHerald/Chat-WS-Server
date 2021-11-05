@@ -32,7 +32,7 @@ class Socket_Open {
 						 * server or are mutual friends.
 						 */
 						s.selected_server_id === msg.payload.selected_server_id &&
-                        s.id !== msg.payload.id
+						s.id !== msg.payload.id
 					) {
 						client.send(JSON.stringify(message))
 					}
