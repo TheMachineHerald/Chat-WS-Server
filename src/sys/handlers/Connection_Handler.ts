@@ -1,5 +1,5 @@
-import Connection from "../../handler/Connection/Connection"
-import { http, CLIENT, CONNECTION_CONTEXT } from "./types"
+import Connection from "../handler/Connection"
+import { http } from "../../server"
 
 class Connection_Handler {
 	connection: Connection
@@ -10,11 +10,11 @@ class Connection_Handler {
 		this.handle = this.handle.bind(this)
 	}
 
-	add_client(ws: CLIENT, req: http.IncomingMessage): void {
+	add_client(ws: CLIENT_SOCKET, req: http.IncomingMessage): void {
 		this.connection.create_client(ws, req)
 	}
 
-	handle(ws: CLIENT, req: http.IncomingMessage): void {
+	handle(ws: CLIENT_SOCKET, req: http.IncomingMessage): void {
 		this.add_client(ws, req)
 	}
 }
