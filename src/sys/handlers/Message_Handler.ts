@@ -1,5 +1,6 @@
 class Message_Handler {
 	handlers: any
+	
 	constructor(handlers: any) {
 		this.handlers = handlers
 		this.handle = this.handle.bind(this)
