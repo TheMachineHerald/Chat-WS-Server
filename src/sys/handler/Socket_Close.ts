@@ -1,6 +1,3 @@
-import { WebSocketServer, WebSocket } from "ws-ws"
-import { HANDLER_MESSAGE } from "./types"
-
 class Socket_Close {
 	wss: WebSocketServer
 
@@ -11,19 +8,19 @@ class Socket_Close {
 		this.handle = this.handle.bind(this)
 	}
 
-	log_close(msg: HANDLER_MESSAGE): void {
+	log_close(msg: HANDLER_MESSAGE_CLOSE): void {
 		console.log(`[RedPill][${msg.ws.id}] left the matrix...`)
-		console.log(`[code]: ${msg.code}`)
-		console.log(`[reason]: ${msg.reason}`)
+		console.log(`[code]: ${msg._code}`)
+		console.log(`[reason]: ${msg._reason}`)
 	}
 
-	broadcast(msg: HANDLER_MESSAGE): void {
+	broadcast(msg: HANDLER_MESSAGE_CLOSE): void {
 		const message: Object = {
 			event: "USER_LOGOUT",
 			payload: {}
 		}
 		
-		this.wss.clients.forEach((client: WebSocket ): void => {
+		this.wss.clients.forEach((client: CLIENT_SOCKET): void => {
 			if (client.readyState === msg.open_state) {
 				if (
 				/**
@@ -40,7 +37,7 @@ class Socket_Close {
 		})
 	}
 
-	handle(msg: any): void {
+	handle(msg: HANDLER_MESSAGE_CLOSE): void {
 		this.log_close(msg)
 		this.broadcast(msg)
 	}

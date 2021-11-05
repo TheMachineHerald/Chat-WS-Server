@@ -1,22 +1,18 @@
-import Message_Handler from "../../handlers/Message_Handler"
-import Socket_Open from "../Socket_Open/Socket_Open"
-import Socket_Close from "../Socket_Close/Socket_Close"
-import Selected_Server from "../Selected_Server/Selected_Server"
-import Selected_Channel from "../Selected_channel/Selected_Channel"
-import Channel_Messages from "../Channel_Messages/Channel_Mesages"
-import Ping from "../Ping/Ping"
-
-import { WebSocketServer } from "ws"
-import { CLIENT } from "./types"
-
+import Message_Handler from "../handlers/Message_Handler"
+import Socket_Open from "./Socket_Open"
+import Socket_Close from "./Socket_Close"
+import Selected_Server from "./Selected_Server"
+import Selected_Channel from "./Selected_Channel"
+import Channel_Messages from "./Channel_Mesages"
+import Ping from "./Ping"
 
 class Connection {
-	open_state = Number
-	wss = WebSocketServer
+	open_state: number
+	wss: WebSocketServer
 	message_handler: Message_Handler
 	close_handler: Socket_Close
 
-	constructor(ctx: any) {
+	constructor(ctx: CONNECTION_CONTEXT) {
 		this.open_state = ctx.open_state
 		this.wss = ctx.wss
 		this.create_client = this.create_client.bind(this)
@@ -37,7 +33,7 @@ class Connection {
 	 *       based on the type of socket event recieved. Each event has its own
 	 *       handler.
 	 */
-	init_handlers(client: CLIENT): void {
+	init_handlers(client: CLIENT_SOCKET): void {
 		console.log(`[RED-PILL][${client.id}] has joined the Nebuchadnezzar!`)
 
 		client.on("message", (msg: any): void => {
@@ -49,13 +45,13 @@ class Connection {
 			})
 		})
 
-		client.on("close", (code: Number, reason: String): void => {
+		client.on("close", (code: number, reason: string): void => {
 			console.log("[NEBUCHADNEZZAR][EVENT][CLOSE]")
 			this.close_handler.handle({
 				open_state: this.open_state,
-				code: code,
-				reason: reason,
-				ws: client
+				ws: client,
+				_code: code,
+				_reason: reason,
 			})
 		})
 	}
@@ -67,9 +63,8 @@ class Connection {
 	 *       socket, which we will use to hydrate with our Socket_Open
 	 *       handler when we recieve the "client_socket_open" event.
      */
-	create_client(ws: CLIENT, req: any): void {
+	create_client(ws: CLIENT_SOCKET, req: any): void {
 		const id = req.url.replace("/?client=", "")
-
 		ws.id = id
 		ws.selected_server_id = null
 		ws.selected_channel_id = null

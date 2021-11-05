@@ -5,7 +5,7 @@ class Message_Handler {
 		this.handle = this.handle.bind(this)
 	}
 
-	handle(msg: any) {
+	handle<Payload>(msg: HANDLER_MESSAGE<Payload>): void {
 		if (!this.handlers[msg.event]) {
 			console.log(`No handler for [EVENT][${msg.event}]`)
 		}
