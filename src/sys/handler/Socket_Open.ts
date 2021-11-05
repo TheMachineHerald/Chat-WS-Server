@@ -27,10 +27,10 @@ class Socket_Open {
 			if (client.readyState === msg.open_state) {
 				client.cache.forEach(s => {
 					if (
-					/**
-                     * Should only broadcast to clients that share the same
-                     * server or are mutual friends.
-                     */
+						/**
+						 * Should only broadcast to clients that share the same
+						 * server or are mutual friends.
+						 */
 						s.selected_server_id === msg.payload.selected_server_id &&
                         s.id !== msg.payload.id
 					) {
