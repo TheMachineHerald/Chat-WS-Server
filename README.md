@@ -1,6 +1,6 @@
 # Chat-WS-Server
 
-Basic working MVP for WebSocket communications with my Chat Application. It handles Chat just fine, but, as of right now, is still handling socket state and lacks a error fallbacks and handling. 
+Basic working MVP for WebSocket communications. It handles Chat just fine, but, as of right now, is still handling socket state and lacks a error fallbacks and handling. 
 
 It is a NAIVE implementation, but the point was to quickly blueprint a stable, scalable baseline to work with while engineering, designing, and developing the entire Frontend/API Server/ DB.
 
