@@ -3,7 +3,7 @@ import { http } from "../../server"
 
 class Connection_Handler {
 	connection: Connection
-
+	
 	constructor(ctx: CONNECTION_CONTEXT) {
 		this.connection = new Connection(ctx)
 		this.add_client = this.add_client.bind(this)

@@ -1,6 +1,6 @@
 class Socket_Open {
 	wss: WebSocketServer
-
+	
 	constructor(wss: WebSocketServer) {
 		this.wss = wss
 		this.broadcast = this.broadcast.bind(this)
