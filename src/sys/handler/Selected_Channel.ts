@@ -1,4 +1,5 @@
 class Selected_Channel {
+	static EVENT: string
 	wss: WebSocketServer
 
 	constructor(wss: WebSocketServer) {
@@ -16,4 +17,5 @@ class Selected_Channel {
 	}
 }
 
+Selected_Channel.EVENT = "SAVE_SELECTED_CHANNEL"
 export default Selected_Channel

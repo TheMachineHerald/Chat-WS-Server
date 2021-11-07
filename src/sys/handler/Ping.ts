@@ -1,4 +1,6 @@
 class Ping {
+	static EVENT: string
+
 	constructor() {
 		this.handle = this.handle.bind(this)
 	}
@@ -12,4 +14,5 @@ class Ping {
 	}
 }
 
+Ping.EVENT = "PING"
 export default Ping

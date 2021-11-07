@@ -1,4 +1,5 @@
 class Channel_Messages {
+	static EVENT: string
 	wss: WebSocketServer
 	
 	constructor(wss: WebSocketServer) {
@@ -31,4 +32,5 @@ class Channel_Messages {
 	}
 }
 
+Channel_Messages.EVENT = "CHANNEL_MESSAGE_SENT"
 export default Channel_Messages

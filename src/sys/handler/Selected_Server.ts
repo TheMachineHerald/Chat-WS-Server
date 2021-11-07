@@ -1,4 +1,5 @@
 class Selected_Server {
+	static EVENT: string
 	wss: WebSocketServer
 
 	constructor(wss: WebSocketServer) {
@@ -19,4 +20,5 @@ class Selected_Server {
 	}
 }
 
+Selected_Server.EVENT = "UPDATE_SELECTED_SERVER"
 export default Selected_Server

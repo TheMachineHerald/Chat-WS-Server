@@ -1,4 +1,5 @@
 class Socket_Open {
+	static EVENT: string
 	wss: WebSocketServer
 	
 	constructor(wss: WebSocketServer) {
@@ -46,4 +47,5 @@ class Socket_Open {
 	}
 }
 
+Socket_Open.EVENT = "CLIENT_SOCKET_OPEN"
 export default Socket_Open

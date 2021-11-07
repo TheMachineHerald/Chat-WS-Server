@@ -18,11 +18,11 @@ class Connection {
 		this.create_client = this.create_client.bind(this)
 		this.init_handlers = this.init_handlers.bind(this)
 		this.message_handler = new Message_Handler({
-			["CLIENT_SOCKET_OPEN"]: new Socket_Open(ctx.wss),
-			["UPDATE_SELECTED_SERVER"]: new Selected_Server(ctx.wss),
-			["SAVE_SELECTED_CHANNEL"]: new Selected_Channel(ctx.wss),
-			["CHANNEL_MESSAGE_SENT"]: new Channel_Messages(ctx.wss),
-			["PING"]: new Ping()
+			[Socket_Open.EVENT]: new Socket_Open(ctx.wss),
+			[Selected_Server.EVENT]: new Selected_Server(ctx.wss),
+			[Selected_Channel.EVENT]: new Selected_Channel(ctx.wss),
+			[Channel_Messages.EVENT]: new Channel_Messages(ctx.wss),
+			[Ping.EVENT]: new Ping()
 		})
 		this.close_handler = new Socket_Close(ctx.wss)
 	}
