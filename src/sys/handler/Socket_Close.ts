@@ -23,10 +23,10 @@ class Socket_Close {
 		this.wss.clients.forEach((client: CLIENT_SOCKET): void => {
 			if (client.readyState === msg.open_state) {
 				if (
-				/**
-				 * Should only broadcast to clients that share the same
-				 * server or are mutual friends.
-				 */
+					/**
+					 * Should only broadcast to clients that share the same
+					 * server or are mutual friends.
+					 */
 					client.selected_server_id === msg.ws.cache[0].selected_server_id &&
 					client.id !== msg.ws.id
 				) {
