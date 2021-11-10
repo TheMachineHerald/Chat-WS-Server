@@ -3,14 +3,15 @@ import Socket_Open from "./Socket_Open"
 import Socket_Close from "./Socket_Close"
 import Selected_Server from "./Selected_Server"
 import Selected_Channel from "./Selected_Channel"
-import Channel_Messages from "./Channel_Mesages"
+import User_Messages from "./User_Messages"
+import Channel_Messages from "./Channel_Messages"
 import Ping from "./Ping"
 
 class Connection {
-	open_state: number
-	wss: WebSocketServer
-	message_handler: Message_Handler
-	close_handler: Socket_Close
+	private open_state: number
+	private wss: WebSocketServer
+	private message_handler: Message_Handler
+	private close_handler: Socket_Close
 
 	constructor(ctx: CONNECTION_CONTEXT) {
 		this.open_state = ctx.open_state
@@ -21,6 +22,7 @@ class Connection {
 			[Socket_Open.EVENT]: new Socket_Open(ctx.wss),
 			[Selected_Server.EVENT]: new Selected_Server(ctx.wss),
 			[Selected_Channel.EVENT]: new Selected_Channel(ctx.wss),
+			[User_Messages.EVENT]: new User_Messages(ctx.wss),
 			[Channel_Messages.EVENT]: new Channel_Messages(ctx.wss),
 			[Ping.EVENT]: new Ping()
 		})
@@ -33,7 +35,7 @@ class Connection {
 	 *       based on the type of socket event recieved. Each event has its own
 	 *       handler.
 	 */
-	init_handlers(client: CLIENT_SOCKET): void {
+	public init_handlers(client: CLIENT_SOCKET): void {
 		console.log(`[RED-PILL][${client.id}] has joined the Nebuchadnezzar!`)
 
 		client.on("message", (msg: any): void => {
@@ -64,7 +66,7 @@ class Connection {
 	 * socket, which we will use to hydrate with our Socket_Open
 	 * handler when we recieve the "client_socket_open" event.
 	 */
-	create_client(ws: CLIENT_SOCKET, req: any): void {
+	public create_client(ws: CLIENT_SOCKET, req: any): void {
 		const id = req.url.replace("/?client=", "")
 		ws.id = id
 		ws.selected_server_id = null

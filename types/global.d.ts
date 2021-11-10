@@ -38,6 +38,12 @@ declare global {
         channel_id: number,
         server_id: number
     }
+
+    interface USER_MESSAGES_PAYLOAD {
+        user_id: number
+        friend_id: number
+        message: string
+    }
     
     interface SELECTED_CHANNEL_PAYLOAD {
         selected_channel_id: null | number

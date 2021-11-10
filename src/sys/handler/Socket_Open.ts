@@ -1,6 +1,6 @@
 class Socket_Open {
 	static EVENT: string
-	wss: WebSocketServer
+	private wss: WebSocketServer
 	
 	constructor(wss: WebSocketServer) {
 		this.wss = wss
@@ -9,7 +9,7 @@ class Socket_Open {
 		this.handle = this.handle.bind(this)
 	}
 
-	hydrate_client(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
+	public hydrate_client(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
 		const parsed_id = msg.ws.id.split("-")[1] || null
 		msg.ws.selected_server_id = msg.payload.selected_server_id
 		msg.ws.selected_channel_id = msg.payload.selected_channel_id
@@ -18,7 +18,7 @@ class Socket_Open {
 		this.broadcast(msg)
 	}
 
-	broadcast(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
+	public broadcast(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
 		const message: Object = {
 			event: "CONNECTED_USER",
 			payload: msg.payload
@@ -42,7 +42,7 @@ class Socket_Open {
 		})
 	}
 
-	handle(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
+	public handle(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
 		this.hydrate_client(msg)
 	}
 }

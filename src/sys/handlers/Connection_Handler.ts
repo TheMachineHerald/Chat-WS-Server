@@ -2,7 +2,7 @@ import Connection from "../handler/Connection"
 import { http } from "../../server"
 
 class Connection_Handler {
-	connection: Connection
+	private connection: Connection
 	
 	constructor(ctx: CONNECTION_CONTEXT) {
 		this.connection = new Connection(ctx)
@@ -10,11 +10,11 @@ class Connection_Handler {
 		this.handle = this.handle.bind(this)
 	}
 
-	add_client(ws: CLIENT_SOCKET, req: http.IncomingMessage): void {
+	public add_client(ws: CLIENT_SOCKET, req: http.IncomingMessage): void {
 		this.connection.create_client(ws, req)
 	}
 
-	handle(ws: CLIENT_SOCKET, req: http.IncomingMessage): void {
+	public handle(ws: CLIENT_SOCKET, req: http.IncomingMessage): void {
 		this.add_client(ws, req)
 	}
 }

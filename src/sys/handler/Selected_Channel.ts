@@ -1,6 +1,6 @@
 class Selected_Channel {
 	static EVENT: string
-	wss: WebSocketServer
+	private wss: WebSocketServer
 
 	constructor(wss: WebSocketServer) {
 		this.wss = wss
@@ -8,11 +8,11 @@ class Selected_Channel {
 		this.handle = this.handle.bind(this)
 	}
 
-	hydrate(msg: HANDLER_MESSAGE<SELECTED_CHANNEL_PAYLOAD>): void {
+	public hydrate(msg: HANDLER_MESSAGE<SELECTED_CHANNEL_PAYLOAD>): void {
 		msg.ws.selected_channel_id = msg.payload.selected_channel_id
 	}
 
-	handle(msg: HANDLER_MESSAGE<SELECTED_CHANNEL_PAYLOAD>): void {
+	public handle(msg: HANDLER_MESSAGE<SELECTED_CHANNEL_PAYLOAD>): void {
 		this.hydrate(msg)
 	}
 }

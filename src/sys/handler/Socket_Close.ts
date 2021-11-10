@@ -1,5 +1,5 @@
 class Socket_Close {
-	wss: WebSocketServer
+	private wss: WebSocketServer
 
 	constructor(wss: WebSocketServer) {
 		this.wss = wss
@@ -8,13 +8,13 @@ class Socket_Close {
 		this.handle = this.handle.bind(this)
 	}
 
-	log_close(msg: HANDLER_MESSAGE_CLOSE): void {
+	private log_close(msg: HANDLER_MESSAGE_CLOSE): void {
 		console.log(`[RedPill][${msg.ws.id}] left the matrix...`)
 		console.log(`[code]: ${msg._code}`)
 		console.log(`[reason]: ${msg._reason}`)
 	}
 
-	broadcast(msg: HANDLER_MESSAGE_CLOSE): void {
+	private broadcast(msg: HANDLER_MESSAGE_CLOSE): void {
 		const message: Object = {
 			event: "USER_LOGOUT",
 			payload: {}
