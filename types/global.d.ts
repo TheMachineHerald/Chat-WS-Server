@@ -41,6 +41,7 @@ declare global {
 
     interface USER_MESSAGES_PAYLOAD {
         user_id: number
+        user_name: string
         friend_id: number
         message: string
     }
