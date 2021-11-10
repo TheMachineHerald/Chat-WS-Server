@@ -1,12 +1,12 @@
 class User_Messages {
-	static EVENT: string
-	private wss: WebSocketServer
-	
-	public constructor(wss: WebSocketServer) {
-		this.wss = wss
-		this.broadcast = this.broadcast.bind(this)
-		this.handle = this.handle.bind(this)
-	}
+    static EVENT: string
+    private wss: WebSocketServer
+
+    public constructor(wss: WebSocketServer) {
+        this.wss = wss
+        this.broadcast = this.broadcast.bind(this)
+        this.handle = this.handle.bind(this)
+    }
 
     public broadcast(msg: HANDLER_MESSAGE<USER_MESSAGES_PAYLOAD>): void {
         const message: Object = {
@@ -29,9 +29,9 @@ class User_Messages {
         })
     }
 
-	public handle(msg: HANDLER_MESSAGE<USER_MESSAGES_PAYLOAD>): void {
-		this.broadcast(msg)
-	}
+    public handle(msg: HANDLER_MESSAGE<USER_MESSAGES_PAYLOAD>): void {
+        this.broadcast(msg)
+    }
 }
 
 User_Messages.EVENT = "USER_MESSAGE_SENT"
