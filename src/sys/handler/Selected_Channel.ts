@@ -2,7 +2,7 @@ class Selected_Channel {
 	static EVENT: string
 	private wss: WebSocketServer
 
-	constructor(wss: WebSocketServer) {
+	public constructor(wss: WebSocketServer) {
 		this.wss = wss
 		this.hydrate = this.hydrate.bind(this)
 		this.handle = this.handle.bind(this)

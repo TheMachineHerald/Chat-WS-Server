@@ -1,7 +1,7 @@
 class Ping {
 	static EVENT: string
 
-	constructor() {
+	public constructor() {
 		this.handle = this.handle.bind(this)
 	}
 

@@ -13,7 +13,7 @@ class Connection {
 	private message_handler: Message_Handler
 	private close_handler: Socket_Close
 
-	constructor(ctx: CONNECTION_CONTEXT) {
+	public constructor(ctx: CONNECTION_CONTEXT) {
 		this.open_state = ctx.open_state
 		this.wss = ctx.wss
 		this.create_client = this.create_client.bind(this)
