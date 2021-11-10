@@ -8,26 +8,26 @@ class User_Messages {
 		this.handle = this.handle.bind(this)
 	}
 
-	public broadcast(msg: HANDLER_MESSAGE<USER_MESSAGES_PAYLOAD>): void {
-		const message: Object = {
-			event: "UPDATE_USER_MESSAGES",
-			payload: msg.payload
-		}
+    public broadcast(msg: HANDLER_MESSAGE<USER_MESSAGES_PAYLOAD>): void {
+        const message: Object = {
+            event: "UPDATE_USER_MESSAGES",
+            payload: msg.payload
+        }
 
-		this.wss.clients.forEach((client: CLIENT_SOCKET): void => {
-			if (client.readyState === msg.open_state) {
+        this.wss.clients.forEach((client: CLIENT_SOCKET): void => {
+            if (client.readyState === msg.open_state) {
                 const parsed_id: number = parseInt(client.id.split("-")[1])
 
-				if (
-					parsed_id === msg.payload.user_id ||
-					parsed_id === msg.payload.friend_id
-				) {
-					console.log("[NEBUCHADNEZZAR]: user match: ", msg.payload)
-					client.send(JSON.stringify(message))
-				}
-			}
-		})
-	}
+                if (
+                    parsed_id === msg.payload.user_id ||
+                    parsed_id === msg.payload.friend_id
+                ) {
+                    console.log("[NEBUCHADNEZZAR]: user match: ", msg.payload)
+                    client.send(JSON.stringify(message))
+                }
+            }
+        })
+    }
 
 	public handle(msg: HANDLER_MESSAGE<USER_MESSAGES_PAYLOAD>): void {
 		this.broadcast(msg)
