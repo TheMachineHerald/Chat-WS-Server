@@ -8,13 +8,13 @@ class Socket_Close {
 		this.handle = this.handle.bind(this)
 	}
 
-	private log_close(msg: HANDLER_MESSAGE_CLOSE): void {
+	public log_close(msg: HANDLER_MESSAGE_CLOSE): void {
 		console.log(`[RedPill][${msg.ws.id}] left the matrix...`)
 		console.log(`[code]: ${msg._code}`)
 		console.log(`[reason]: ${msg._reason}`)
 	}
 
-	private broadcast(msg: HANDLER_MESSAGE_CLOSE): void {
+	public broadcast(msg: HANDLER_MESSAGE_CLOSE): void {
 		const message: Object = {
 			event: "USER_LOGOUT",
 			payload: {}
@@ -37,7 +37,7 @@ class Socket_Close {
 		})
 	}
 
-	handle(msg: HANDLER_MESSAGE_CLOSE): void {
+	public handle(msg: HANDLER_MESSAGE_CLOSE): void {
 		this.log_close(msg)
 		this.broadcast(msg)
 	}

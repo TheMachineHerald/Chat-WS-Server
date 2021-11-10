@@ -1,6 +1,6 @@
 class Channel_Messages {
 	static EVENT: string
-	wss: WebSocketServer
+	private wss: WebSocketServer
 	
 	constructor(wss: WebSocketServer) {
 		this.wss = wss
@@ -8,7 +8,7 @@ class Channel_Messages {
 		this.handle = this.handle.bind(this)
 	}
 
-	broadcast(msg: HANDLER_MESSAGE<CHANNEL_MESSAGES_PAYLOAD>): void {
+	public broadcast(msg: HANDLER_MESSAGE<CHANNEL_MESSAGES_PAYLOAD>): void {
 		const message: Object = {
 			event: "UPDATE_CHANNEL_MESSAGES",
 			payload: {}
@@ -27,7 +27,7 @@ class Channel_Messages {
 		})
 	}
 
-	handle(msg: HANDLER_MESSAGE<CHANNEL_MESSAGES_PAYLOAD>): void {
+	public handle(msg: HANDLER_MESSAGE<CHANNEL_MESSAGES_PAYLOAD>): void {
 		this.broadcast(msg)
 	}
 }
