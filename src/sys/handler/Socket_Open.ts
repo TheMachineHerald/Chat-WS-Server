@@ -9,15 +9,6 @@ class Socket_Open {
 		this.handle = this.handle.bind(this)
 	}
 
-	public hydrate_client(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
-		const parsed_id = msg.ws.id.split("-")[1] || null
-		msg.ws.selected_server_id = msg.payload.selected_server_id
-		msg.ws.selected_channel_id = msg.payload.selected_channel_id
-		msg.ws.cache.push(msg.payload)
-		console.log("[RED-PILL][HYDRATED]: ", parsed_id, msg.payload)
-		this.broadcast(msg)
-	}
-
 	public broadcast(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
 		const message: Object = {
 			event: "CONNECTED_USER",
@@ -40,6 +31,15 @@ class Socket_Open {
 				})
 			}
 		})
+	}
+
+	public hydrate_client(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
+		const parsed_id = msg.ws.id.split("-")[1] || null
+		msg.ws.selected_server_id = msg.payload.selected_server_id
+		msg.ws.selected_channel_id = msg.payload.selected_channel_id
+		msg.ws.cache.push(msg.payload)
+		console.log("[RED-PILL][HYDRATED]: ", parsed_id, msg.payload)
+		this.broadcast(msg)
 	}
 
 	public handle(msg: HANDLER_MESSAGE<SOCKET_OPEN_PAYLOAD>): void {
