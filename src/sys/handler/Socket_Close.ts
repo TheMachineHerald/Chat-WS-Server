@@ -1,7 +1,7 @@
 class Socket_Close {
 	private wss: WebSocketServer
 
-	constructor(wss: WebSocketServer) {
+	public constructor(wss: WebSocketServer) {
 		this.wss = wss
 		this.log_close = this.log_close.bind(this)
 		this.broadcast = this.broadcast.bind(this)

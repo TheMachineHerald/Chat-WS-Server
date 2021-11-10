@@ -2,7 +2,7 @@ class User_Messages {
 	static EVENT: string
 	private wss: WebSocketServer
 	
-	constructor(wss: WebSocketServer) {
+	public constructor(wss: WebSocketServer) {
 		this.wss = wss
 		this.broadcast = this.broadcast.bind(this)
 		this.handle = this.handle.bind(this)

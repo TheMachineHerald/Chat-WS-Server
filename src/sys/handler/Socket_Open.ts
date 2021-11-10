@@ -2,7 +2,7 @@ class Socket_Open {
 	static EVENT: string
 	private wss: WebSocketServer
 	
-	constructor(wss: WebSocketServer) {
+	public constructor(wss: WebSocketServer) {
 		this.wss = wss
 		this.broadcast = this.broadcast.bind(this)
 		this.hydrate_client = this.hydrate_client.bind(this)

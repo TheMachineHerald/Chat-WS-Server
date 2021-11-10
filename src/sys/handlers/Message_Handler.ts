@@ -1,7 +1,7 @@
 class Message_Handler {
 	private handlers: any
 	
-	constructor(handlers: any) {
+	public constructor(handlers: any) {
 		this.handlers = handlers
 		this.handle = this.handle.bind(this)
 	}
