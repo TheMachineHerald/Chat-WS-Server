@@ -5,7 +5,7 @@ class Ping {
 		this.handle = this.handle.bind(this)
 	}
 
-	handle(msg: HANDLER_MESSAGE<any>): void {
+	public handle(msg: HANDLER_MESSAGE<any>): void {
 		const payload: Object = {
 			event: "PONG",
 			data: null
