@@ -9,7 +9,6 @@ class Home_Selected {
     }
 
     public hydrate(msg: HANDLER_MESSAGE<any>): void {
-        console.log("hydrating: ", msg.ws.id, msg.payload)
         msg.ws.home_selected = msg.payload.home_selected
     }
 

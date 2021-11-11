@@ -12,7 +12,6 @@ class Selected_Server {
 		msg.ws.selected_server_id = msg.payload.selected_server_id
 		msg.ws.selected_channel_id = msg.payload.selected_channel_id
 		msg.ws.home_selected = false
-		console.log("TOGGLE HOME SELECTED: ", msg.ws.id, msg.ws.home_selected)
 		console.log("[SELECTED SERVER][HYDRATE]: ", msg.ws.server_cache[0])
 	}
 
