@@ -14,7 +14,12 @@ class Socket_Close {
 		console.log(`[reason]: ${msg._reason}`)
 	}
 
+	/**
+	 * Should only broadcast to clients that share the same
+	 * server or are mutual friends.
+	 */
 	public broadcast(msg: HANDLER_MESSAGE_CLOSE): void {
+		const parsed_id = parseInt(msg.ws.id.split("-")[1])
 		const message: Object = {
 			event: "USER_LOGOUT",
 			payload: {}
@@ -22,13 +27,18 @@ class Socket_Close {
 		
 		this.wss.clients.forEach((client: CLIENT_SOCKET): void => {
 			if (client.readyState === msg.open_state) {
+				if (client.home_selected) {
+					client.friends_cache.forEach(f => {
+						if (f.id === parsed_id) {
+							client.send(JSON.stringify(message))
+						}
+					})
+					return
+				}
+
 				if (
-					/**
-					 * Should only broadcast to clients that share the same
-					 * server or are mutual friends.
-					 */
-					client.selected_server_id === msg.ws.server_cache[0].selected_server_id &&
-					client.id !== msg.ws.id
+					client.selected_server_id === msg.ws.server_cache[0].selected_server_id
+					&& client.id !== msg.ws.id
 				) {
 					console.log("[NEBUCHADNEZZAR][EVENT]->[USER_LOGOUT]: ", msg.ws.id)
 					client.send(JSON.stringify(message))

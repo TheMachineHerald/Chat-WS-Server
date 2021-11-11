@@ -22,7 +22,6 @@ class User_Messages {
                     parsed_id === msg.payload.user_id ||
                     parsed_id === msg.payload.friend_id
                 ) {
-                    console.log("[NEBUCHADNEZZAR]: user match: ", msg.payload)
                     client.send(JSON.stringify(message))
                 }
             }

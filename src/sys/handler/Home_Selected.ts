@@ -1,4 +1,4 @@
-class Friend_List {
+class Home_Selected {
     static EVENT: string
     private wss: WebSocketServer
 
@@ -9,9 +9,7 @@ class Friend_List {
     }
 
     public hydrate(msg: HANDLER_MESSAGE<any>): void {
-        msg.payload.friends.forEach((user: CHANNEL_USER): void => {
-            msg.ws.friends_cache.push(user)
-        })
+        msg.ws.home_selected = msg.payload.home_selected
     }
 
     public handle(msg: HANDLER_MESSAGE<any>): void {
@@ -19,5 +17,5 @@ class Friend_List {
     }
 }
 
-Friend_List.EVENT = "POPULATE_FRIEND_LIST"
-export default Friend_List
+Home_Selected.EVENT = "SAVE_HOME_SELECTED"
+export default Home_Selected

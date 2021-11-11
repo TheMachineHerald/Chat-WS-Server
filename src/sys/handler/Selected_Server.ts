@@ -11,6 +11,7 @@ class Selected_Server {
 	public hydrate(msg: HANDLER_MESSAGE<SELECTED_SERVER_PAYLOAD>): void {
 		msg.ws.selected_server_id = msg.payload.selected_server_id
 		msg.ws.selected_channel_id = msg.payload.selected_channel_id
+		msg.ws.home_selected = false
 		console.log("[SELECTED SERVER][HYDRATE]: ", msg.ws.server_cache[0])
 	}
 

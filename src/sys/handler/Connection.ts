@@ -2,6 +2,7 @@ import Message_Handler from "../handlers/Message_Handler"
 import Socket_Open from "./Socket_Open"
 import Socket_Close from "./Socket_Close"
 import Friend_List from "./Friends_List"
+import Home_Selected from "./Home_Selected"
 import Selected_Server from "./Selected_Server"
 import Selected_Channel from "./Selected_Channel"
 import User_Messages from "./User_Messages"
@@ -22,6 +23,7 @@ class Connection {
 		this.message_handler = new Message_Handler({
 			[Socket_Open.EVENT]: new Socket_Open(ctx.wss),
 			[Friend_List.EVENT]: new Friend_List(ctx.wss),
+			[Home_Selected.EVENT]: new Home_Selected(ctx.wss),
 			[Selected_Server.EVENT]: new Selected_Server(ctx.wss),
 			[Selected_Channel.EVENT]: new Selected_Channel(ctx.wss),
 			[User_Messages.EVENT]: new User_Messages(ctx.wss),
