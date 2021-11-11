@@ -1,6 +1,7 @@
 import Message_Handler from "../handlers/Message_Handler"
 import Socket_Open from "./Socket_Open"
 import Socket_Close from "./Socket_Close"
+import Friend_List from "./Friends_List"
 import Selected_Server from "./Selected_Server"
 import Selected_Channel from "./Selected_Channel"
 import User_Messages from "./User_Messages"
@@ -20,6 +21,7 @@ class Connection {
 		this.init_handlers = this.init_handlers.bind(this)
 		this.message_handler = new Message_Handler({
 			[Socket_Open.EVENT]: new Socket_Open(ctx.wss),
+			[Friend_List.EVENT]: new Friend_List(ctx.wss),
 			[Selected_Server.EVENT]: new Selected_Server(ctx.wss),
 			[Selected_Channel.EVENT]: new Selected_Channel(ctx.wss),
 			[User_Messages.EVENT]: new User_Messages(ctx.wss),
@@ -69,9 +71,11 @@ class Connection {
 	public create_client(ws: CLIENT_SOCKET, req: any): void {
 		const id = req.url.replace("/?client=", "")
 		ws.id = id
+		ws.home_selected = null
 		ws.selected_server_id = null
 		ws.selected_channel_id = null
-		ws.cache = []
+		ws.friends_cache = []
+		ws.server_cache = []
 		this.init_handlers(ws)
 	}
 }
