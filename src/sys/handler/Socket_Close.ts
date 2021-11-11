@@ -27,7 +27,7 @@ class Socket_Close {
 					 * Should only broadcast to clients that share the same
 					 * server or are mutual friends.
 					 */
-					client.selected_server_id === msg.ws.cache[0].selected_server_id &&
+					client.selected_server_id === msg.ws.server_cache[0].selected_server_id &&
 					client.id !== msg.ws.id
 				) {
 					console.log("[NEBUCHADNEZZAR][EVENT]->[USER_LOGOUT]: ", msg.ws.id)

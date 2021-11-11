@@ -64,15 +64,27 @@ declare global {
         last_name: string
         email: string
         status: number
+        home_selected: boolean
+        selected_friend_id: number
+        selected_friend_user_name: string
         selected_server_id: number
         selected_channel_id: number
     }
     
     interface CLIENT_SOCKET extends WebSocket {
-        id: string,
+        id: string
+        home_selected: boolean | null
         selected_server_id: number | null
         selected_channel_id: number | null
-        cache: Array<{ 
+        friends_cache: Array<{
+            id: number
+            status: number
+            email: string
+            user_name: string
+            first_name: string
+            last_name: string
+        }>
+        server_cache: Array<{ 
             id: number,
             user_name: string,
             first_name: string,
@@ -81,6 +93,20 @@ declare global {
             selected_server_id: number,
             selected_channel_id: number
          }>
+    }
+
+    interface CHANNEL_USER {
+        id: number
+        user_name: string
+        first_name: string
+        last_name: string
+        email: string
+        status: number
+    }
+
+    interface POPULATE_USER_FRIENDS_MESSAGE {
+        event: string
+        payload: Array<CHANNEL_USER>
     }
 
     /**
