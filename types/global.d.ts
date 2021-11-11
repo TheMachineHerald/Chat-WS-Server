@@ -109,6 +109,11 @@ declare global {
         payload: Array<CHANNEL_USER>
     }
 
+    interface SAVE_HOME_SELECTED_MESSAGE {
+        event: string
+        payload: Object<{ home_selected: boolean }>
+    }
+
     /**
      * Classes
      */
