@@ -32,6 +32,12 @@ declare global {
         user_name: string
         message: Text
     }
+
+    interface SERVER {
+        server_id: number
+        server_name: string
+        created_by_user_id: number
+    }
     
     interface CHANNEL_MESSAGES_PAYLOAD {
         user: USER
@@ -69,6 +75,7 @@ declare global {
         selected_friend_user_name: string
         selected_server_id: number
         selected_channel_id: number
+        servers: Array<SERVER>
     }
     
     interface CLIENT_SOCKET extends WebSocket {
@@ -84,14 +91,15 @@ declare global {
             first_name: string
             last_name: string
         }>
-        server_cache: Array<{ 
+        user_cache: Array<{ 
             id: number,
             user_name: string,
             first_name: string,
             email: string,
             status: number,
             selected_server_id: number,
-            selected_channel_id: number
+            selected_channel_id: number,
+            servers: Array<SERVER>
          }>
     }
 

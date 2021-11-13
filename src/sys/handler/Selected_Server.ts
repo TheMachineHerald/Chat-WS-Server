@@ -12,7 +12,7 @@ class Selected_Server {
 		msg.ws.selected_server_id = msg.payload.selected_server_id
 		msg.ws.selected_channel_id = msg.payload.selected_channel_id
 		msg.ws.home_selected = false
-		console.log("[SELECTED SERVER][HYDRATE]: ", msg.ws.server_cache[0])
+		console.log("[SELECTED SERVER][HYDRATE]: ", msg.ws.user_cache[0])
 	}
 
 	public handle(msg: HANDLER_MESSAGE<SELECTED_SERVER_PAYLOAD>): void {

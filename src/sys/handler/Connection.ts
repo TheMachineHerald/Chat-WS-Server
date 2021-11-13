@@ -77,7 +77,7 @@ class Connection {
 		ws.selected_server_id = null
 		ws.selected_channel_id = null
 		ws.friends_cache = []
-		ws.server_cache = []
+		ws.user_cache = []
 		this.init_handlers(ws)
 	}
 }

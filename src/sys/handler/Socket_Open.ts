@@ -16,29 +16,35 @@ class Socket_Open {
 		}
 
 		this.wss.clients.forEach((client: CLIENT_SOCKET): void => {
-			if (client.readyState === msg.open_state) {
-				/**
-				 * Should only broadcast to clients that share the same
-				 * server or are mutual friends.
-				 */
-				if (client.home_selected) {
+			try {
+				let match = false
+
+				if (client.readyState === msg.open_state) {
+					/**
+					 * Should only broadcast to clients that share the same
+					 * server or are mutual friends.
+					 */
 					client.friends_cache.forEach(f => {
-						if (
-							f.id === msg.payload.id
-						) {
-							client.send(JSON.stringify(message))
+						if (f.id === msg.payload.id) {
+							match = true
 						}
 					})
-				} else {
-					client.server_cache.forEach(s => {
+					
+					msg.ws.user_cache[0].servers.forEach(s => {
 						if (
-							s.selected_server_id === msg.payload.selected_server_id &&
-							s.id !== msg.payload.id
+							s.server_id === client.user_cache[0].selected_server_id
+							&& msg.payload.id !== client.user_cache[0].id
 						) {
-							client.send(JSON.stringify(message))
+							match = true
 						}
 					})
+
+					if (match) {
+						client.send(JSON.stringify(message))
+					}
 				}
+			} catch(e) {
+				console.log(e)
 			}
 		})
 	}
@@ -48,7 +54,7 @@ class Socket_Open {
 		msg.ws.home_selected = msg.payload.home_selected
 		msg.ws.selected_server_id = msg.payload.selected_server_id
 		msg.ws.selected_channel_id = msg.payload.selected_channel_id
-		msg.ws.server_cache.push(msg.payload)
+		msg.ws.user_cache.push(msg.payload)
 		console.log("[RED-PILL][HYDRATED]: ", parsed_id, msg.payload)
 		this.broadcast(msg)
 	}

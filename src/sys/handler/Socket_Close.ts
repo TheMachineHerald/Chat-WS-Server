@@ -26,23 +26,31 @@ class Socket_Close {
 		}
 		
 		this.wss.clients.forEach((client: CLIENT_SOCKET): void => {
-			if (client.readyState === msg.open_state) {
-				if (client.home_selected) {
+			try {
+				let match = false
+
+				if (client.readyState === msg.open_state) {
 					client.friends_cache.forEach(f => {
 						if (f.id === parsed_id) {
-							client.send(JSON.stringify(message))
+							match = true
 						}
 					})
-					return
-				}
 
-				if (
-					client.selected_server_id === msg.ws.server_cache[0].selected_server_id
-					&& client.id !== msg.ws.id
-				) {
-					console.log("[NEBUCHADNEZZAR][EVENT]->[USER_LOGOUT]: ", msg.ws.id)
-					client.send(JSON.stringify(message))
+					msg.ws.user_cache[0].servers.forEach(s => {
+						if (
+							s.server_id === client.user_cache[0].selected_server_id
+							&& parsed_id !== client.user_cache[0].id
+						) {
+							match = true
+						}
+					})
+
+					if (match) {
+						client.send(JSON.stringify(message))
+					}
 				}
+			} catch(e) {
+				console.log(e)
 			}
 		})
 	}
